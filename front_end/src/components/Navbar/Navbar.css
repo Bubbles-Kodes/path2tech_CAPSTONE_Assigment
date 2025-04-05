@@ -1,0 +1,151 @@
+/* General Navbar Styles */
+.navbar {
+    padding: 20px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
+    width: 150px;
+}
+
+.navbar-menu {
+    display: flex;
+    list-style: none;
+    gap: 23px;
+    margin: 10px;
+    font-size: 1.4rem;
+    font-family: 'lilita one', sans-serif;
+    color: rgb(72, 174, 214);
+    white-space: nowrap; /* Prevent words from breaking */
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 23px;
+}
+
+.navbar-search-icon {
+    position: relative;
+}
+
+.navbar-search-icon img {
+    width: 32px;
+}
+
+.navbar-search-icon .dot {
+    width: 8px;
+    height: 8px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    top: -1px;
+    right: -1px;
+}
+
+.navbar button {
+    background: rgb(15, 207, 232);
+    color: #ccffcc;
+    border: navajowhite;
+    font-size: 1.2rem;
+    font-family: 'lilita One', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 8px 20px;
+    border-radius: 25px;
+    border: 2.3px solid aqua;
+    transition: all 0.2s ease;
+}
+
+.navbar button:hover {
+    background-color: rgb(93, 227, 245);
+    color: rgb(255, 204, 73);
+}
+
+.navbar a {
+    cursor: pointer;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 2px;
+    border-radius: 20px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    white-space: nowrap; /* Prevent words from breaking */
+}
+
+.navbar a:hover {
+    color: rgb(251, 183, 10);
+}
+
+.navbar .active {
+    background-color: aliceblue;
+    border-bottom: 2px solid rgb(93, 227, 245);
+}
+
+.navbar .active:hover {
+    background: transparent;
+    color: rgb(251, 183, 10);
+}
+
+/* Media Queries for Tablet View */
+@media (max-width: 1050px) {
+    .navbar .logo {
+        width: 140px;
+    }
+
+    .navbar-menu {
+        gap: 20px;
+        font-size: 17px;
+    }
+
+    .navbar-right {
+        gap: 30px;
+    }
+
+    .navbar-right img {
+        width: 22px;
+    }
+
+    .navbar-right button {
+        padding: 8px 25px;
+    }
+}
+
+@media (max-width: 900px) {
+    .navbar .logo {
+        width: 120px;
+    }
+
+    .navbar-menu {
+        gap: 15px;
+        font-size: 16px;
+    }
+
+    .navbar-right {
+        gap: 10px;
+    }
+
+    .navbar-right img {
+        width: 20px;
+    }
+
+    .navbar-right button {
+        padding: 7px 20px;
+        font-size: 15px;
+    }
+}
+
+/* Media Query for Small Screens (Mobile) */
+@media (max-width: 750px) {
+    .navbar-menu {
+        display: none; /* Hide menu items */
+    }
+
+    .hamburger-menu {
+        display: block; /* Show hamburger menu */
+        font-size: 24px;
+        cursor: pointer;
+    }
+}

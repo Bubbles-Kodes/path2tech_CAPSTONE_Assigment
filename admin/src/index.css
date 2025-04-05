@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&display=swap');
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+body{
+  min-height: 100vh;
+  font-family: 'Lilita One', sans-serif;
+  background-color: aliceblue;
+  color: #333;
+}
+a{
+  text-decoration: none;
+  color: inherit;
+  font-family: 'Lilita One', sans-serif;
+}
+hr{
+  border: none;
+  height: 1px;
+  background-color: aquamarine;
+}
+.app-content{
+  display: flex;
+}
+.flex-col{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@keyframes fadeIn{
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}

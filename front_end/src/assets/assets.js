@@ -24,6 +24,7 @@ import tiktok_logo_icon from './tiktok_logo_icon.svg'
 import store_apple from './store_apple.svg'
 import store_google from './store_google.svg'
 import close_icon from './close_icon.svg'
+import profile_icon from './profile_icon.png'
 
 
 export const assets = {
@@ -47,7 +48,8 @@ export const assets = {
     vanilla_cake: vanilla_cake,
     strawberry_shake: strawberry_shake,
     chocolate_shake: chocolate_shake,
-    vanilla_shake: vanilla_shake
+    vanilla_shake: vanilla_shake,
+    profile_icon: profile_icon
 }
 export const menu_list =[
     {

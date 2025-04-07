@@ -4,7 +4,7 @@ import './Cart.css';
 import { useNavigate } from 'react-router-dom'
 
 const Cart = () => {
-  const { cartItems,food_list,removeFromCart, decreaseQuantity, addToCart } = useContext(StoreContext);
+  const { cartItems,food_list,removeFromCart, decreaseQuantity, getTotalCartAmount, addToCart, url } = useContext(StoreContext);
 
   const totalPrice = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -32,12 +32,12 @@ const Cart = () => {
           cartItems.map((item) => (
             <div>
               <div className='cart-items-title cart-items-item' key={item.name}>
-              <img src={item.img} alt="" />
+              <img src={url+"/images/"+item.img} alt="" />
               <p>${item.price.toFixed(2)}</p>
               <p className="cart-items-controls">
               <button className='cart-button' onClick={() => addToCart(item)}>+</button>
               <span className='quantity'>{item.quantity}</span>
-              <button className='cart-button' onClick={() => decreaseQuantity(item.name)}>-</button>
+              <button className='cart-button' onClick={() => decreaseQuantity(item)}>-</button>
               </p>
               <p>${(item.price * item.quantity).toFixed(2)}</p>
             </div>

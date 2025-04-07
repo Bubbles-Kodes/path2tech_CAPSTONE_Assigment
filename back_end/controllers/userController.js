@@ -47,6 +47,12 @@ const loginUser = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+const createToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: "3d",
+  });
+}
 // Function to register a new user
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
@@ -76,6 +82,7 @@ const registerUser = async (req, res) => {
       name:name,
       email:email,
       password: hashedPassword,
+      cartData: {}
     });
 
     // Save user to database

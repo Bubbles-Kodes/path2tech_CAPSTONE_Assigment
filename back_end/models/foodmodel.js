@@ -8,6 +8,14 @@ const foodSchema = new mongoose.Schema({
     category: {type:String,required:true}
 })
 
+foodSchema.virtual("id").get(function () {
+    return this._id.toHexString();
+});
+
+foodSchema.set("toJSON", {
+    virtuals: true // Include virtual fields in JSON responses
+});
+
 const foodModel = mongoose.models.food || mongoose.model("food",foodSchema);
 
 export default foodModel;

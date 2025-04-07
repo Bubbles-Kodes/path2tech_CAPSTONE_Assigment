@@ -1,66 +1,32 @@
-import React, { useContext, useState } from 'react';
-import './FoodDisplay.css';
+import React, { useContext } from 'react';
 import { StoreContext } from '../../context/StoreContext';
 import FoodItem from '../FoodItem/FoodItem';
+import './FoodDisplay.css';
 
-const FoodDisplay = ({ category }) => {
-  const [cartItems, setCartItems] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
-
+const FoodDisplay = () => {
   const { food_list } = useContext(StoreContext);
 
-  // Function to add an item to the cart
-  const addToCart = (item) => {
-    console.log(`Adding item to cart: ${item.id}`); // Log the item ID
-
-    setCartItems((prevCartItems) => {
-      const existingItem = prevCartItems.find((cartItem) => cartItem.id === item.id);
-      if (existingItem) {
-        return prevCartItems.map((cartItem) =>
-          cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.quantity + 1 }
-            : cartItem
-        );
-      } else {
-        return [...prevCartItems, { ...item, quantity: 1 }];
-      }
-    });
-
-    setTotalPrice((prevTotal) => prevTotal + item.price);
-  };
-
-  // Function to handle checkout
-  const handleCheckout = () => {
-    if (cartItems.length === 0) {
-      alert('Your cart is empty!');
-      return;
-    }
-
-    console.log('Items in cart during checkout:', cartItems.map((item) => item.id)); // Log all item IDs
-    alert(`Thank you for your order! Total: $${totalPrice.toFixed(2)}`);
-    setCartItems([]);
-    setTotalPrice(0);
-  };
+  console.log("Food list being rendered:", food_list); // Debugging: Log the entire food list
 
   return (
     <div className='food-display' id='food-display'>
       <h2>What You Cravin'?</h2>
-      <div className='food-display-list'>
-        {food_list
-          .filter((item) => category === 'All' || item.category === category)
-          .map((item) => (
-            <FoodItem
-              key={item.id}
-              name={item.name}
-              description={item.description}
-              img={item.img}
-              price={item.price}
-              onAddToCart={() => addToCart(item)}
-            />
-          ))}
-      </div>
-
+    <div className="food-display-list">
+      {food_list.map((food) => {
+        console.log("Food item being passed to FoodItem:", food); // Debugging: Log each food item
+        return (
+          <FoodItem
+            key={food._id} // Ensure a unique key is used
+            _id={food._id} // Pass _id to FoodItem
+            name={food.name}
+            description={food.description}
+            img={food.img}
+            price={food.price}
+          />
+        );
+      })}
     </div>
+  </div>
   );
 };
 

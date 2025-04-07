@@ -3,29 +3,35 @@ import { Link } from 'react-router-dom';
 import { StoreContext } from '../../context/StoreContext';
 import './FoodItem.css';
 
-const FoodItem = ({ name, description, img, price }) => {
-  const { addToCart } = useContext(StoreContext);
+const FoodItem = ({ name, description, img, price, _id }) => {
+  const { addToCart, url, removeFromCart } = useContext(StoreContext);
   const [itemCount, setItemCount] = useState(0);
 
   const handleAddToCart = () => {
     setItemCount((prevCount) => prevCount + 1);
-    addToCart({ name, description, img, price });
+    addToCart({ name, description, img, price, _id });
   };
 
-  const handleRemoveFromCart = () => {
+  const handleRemoveFromCart = async () => {
     if (itemCount > 0) {
-      setItemCount((prevCount) => prevCount - 1);
+      try {
+        console.log("Removing item from cart:", { _id, name, description, img, price }); // Debugging
+        await removeFromCart({ _id, name, description, img, price }); // Await the backend call
+        setItemCount((prevCount) => prevCount - 1); // Update the local state
+      } catch (error) {
+        console.error("Error removing item from cart:", error);
+      }
     }
   };
 
   const handleAddMore = () => {
     setItemCount((prevCount) => prevCount + 1);
-    addToCart({ name, description, img, price });
+    addToCart({ name, description, img, price, _id });
   };
 
   return (
     <div className='food-display-list-item'>
-      <img className='food-item-image' src={img} alt={name} />
+      <img className='food-item-image' src={url+"/images/"+img} alt={name} />
       <h3>{name}</h3>
       <p>{description}</p>
       <h4>${price.toFixed(2)}</h4>
@@ -42,13 +48,13 @@ const FoodItem = ({ name, description, img, price }) => {
               Add More
             </button>
             <button onClick={handleRemoveFromCart} className='remove-from-cart'>
-              Remove from Cart
+              Remove
             </button>
           </>
         )}
-        <Link to='/order' className='checkout-button'>
+        <Link to='/cart' className='checkout-button'>
           <span className='checkout-icon'>🛒</span>
-          Checkout
+          View Cart
         </Link>
       </div>
     </div>

@@ -20,9 +20,9 @@
     display: flex;
     flex-direction: column;
     align-items: start;
-    gap: 20px;
+    gap: 15px;
     list-style: none;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .content-right ul li, .content-center ul li, .content-left ul li {
@@ -33,7 +33,7 @@
 }
 
 .footer .logo{
-    width: 180px;
+    width: 120px;
 }
 
 .footer hr{
@@ -52,6 +52,30 @@
     font-family: 'Outfit';
     font-weight: 500;
     font-size: .8rem;
+}
+.back-to-top {
+    display: inline-block;
+    margin-top: 20px; /* Add space above the button */
+    padding: 10px 15px;
+    background-color: rgb(72, 174, 214); /* Button background color */
+    color: rgb(217, 248, 242); /* Button text color */
+    border: 3px solid rgb(93, 227, 245);
+    border-radius: 17px;
+    cursor: pointer;
+    font-family: lilita one, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    transition: background-color .5s ease;
+    text-align: center;
+}
+
+.back-to-top:hover {
+    background-color: #bff6bf; /* Darker shade on hover */
+    color: rgb(72, 174, 214);
+}
+
+.back-to-top:focus {
+    outline: none; /* Remove focus outline */
 }
 @media (max-width:750px) {
     .footer-content{

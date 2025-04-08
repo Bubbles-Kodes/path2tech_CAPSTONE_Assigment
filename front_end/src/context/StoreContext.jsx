@@ -21,19 +21,46 @@ const fetchFoodList = async () => {
 };
 
 
-    useEffect(() =>{
-     async function loadData() {
-        await fetchFoodList();
-        if(localStorage.getItem("token")){
-            setToken(localStorage.getItem("token"));//Empty dependency array to run only once on mount
- 
-         }    
-     }
+// Function to load cart data from the backend
+const loadCartData = async () => {
+    if (token) {
+        console.log("Token being sent:", token); // Debugging
+        try {
+            const response = await axios.get(url + "/api/cart/get", {
+                headers: { token }, // Include the token in the headers
+            });
+            console.log("API Response:", response); // Debugging
+            if (response.data.success) {
+                console.log("Cart data loaded:", response.data.cartData); // Debugging
+                setCartItems(response.data.cartData); // Update the cartItems state
+            } else {
+                console.error("Failed to load cart data:", response.data.message);
+            }
+        } catch (error) {
+            console.error("Error loading cart data:", error.response?.data || error.message);
+        }
+    } else {
+        console.error("No token found. User is not logged in.");
+    }
+};
+
+// Call loadCartData in useEffect to load cart data on mount
+useEffect(() => {
+    async function loadData() {
+        await fetchFoodList(); // Load the food list
+        const storedToken = localStorage.getItem("token"); // Retrieve token from localStorage
+        if (storedToken) {
+            setToken(storedToken); // Set the token in state
+            await loadCartData(); // Load the cart data
+        } else {
+            console.error("No token found in localStorage.");
+        }
+    }
     loadData();
-},[]);
+}, []);
 
 
-
+// Function to add items in the cart
 
 const addToCart = async (item) => {
     // Debugging: Log the item being added to the cart
@@ -71,6 +98,8 @@ const addToCart = async (item) => {
     }
 };
 
+// Function to remove items from the cart
+
 const removeFromCart = async (item) => {
     console.log("Item being removed from cart:", item); // Debugging
     if (token) {
@@ -91,13 +120,13 @@ const removeFromCart = async (item) => {
     }
   };
 
-    // Function to decrease the quantity of an item in the cart
+  // Function to decrease the quantity of an item in the cart
     const decreaseQuantity = async (item) => {
         console.log("Decreasing quantity for item:", item); // Debugging
     
         // Update the cart items in the frontend
         setCartItems((prevItems) =>
-            prevItems
+           prevItems
                 .map((cartItem) =>
                     cartItem._id === item._id && cartItem.quantity > 0
                         ? { ...cartItem, quantity: cartItem.quantity - 1 }
@@ -116,7 +145,7 @@ const removeFromCart = async (item) => {
                 );
                 if (!response.data.success) {
                     console.error("Failed to decrease item quantity in backend:", response.data.message);
-                }
+                   }
             } catch (error) {
                 console.error("Error decreasing item quantity in backend:", error.response?.data || error.message);
             }
@@ -128,7 +157,7 @@ const removeFromCart = async (item) => {
 
 //get total cart amount function 
 
-const getTotalCartAmount = () => {
+ const getTotalCartAmount = () => {
     let totalAmount = 0;
     for(const item in cartItems)
     {
@@ -161,5 +190,5 @@ const contextValue = {
         </StoreContext.Provider>
     );
 };
-
+     
 export default StoreContextProvider;

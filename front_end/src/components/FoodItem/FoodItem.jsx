@@ -53,8 +53,7 @@ const FoodItem = ({ name, description, img, price, _id }) => {
           </>
         )}
         <Link to='/cart' className='checkout-button'>
-          <span className='checkout-icon'>🛒</span>
-          View Cart
+          <span className='checkout-icon'>View Cart 🛒</span>
         </Link>
       </div>
     </div>

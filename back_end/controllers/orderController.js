@@ -7,7 +7,7 @@ const stripe = new Stripe (process.env.STRIPE_SECRET_KEY)
 //placing user order for frontend
 const placeOrder = async (req,res) =>{
 
-    const frontend_url = "https://musical-dollop-q7pxpqp4rj5ph9x5p-5174.app.github.dev";
+    const frontend_url = "https://musical-dollop-q7pxpqp4rj5ph9x5p-5173.app.github.dev";
 
     try{
         const newOrder = new orderModel({
@@ -36,7 +36,7 @@ const placeOrder = async (req,res) =>{
               product_data:{
                  name:"Delivery Charges"
               },
-              unit_amount:2*100
+              unit_amount: 10.5 * 100,
            },
            quantity:1
         })
@@ -51,7 +51,7 @@ const placeOrder = async (req,res) =>{
         res.json({success:true,session_url:session.url})
   
      } catch (error) {
-        console.log(error);
+        
         res.json({success:false,message:"Error"})
      }
   }
@@ -67,7 +67,7 @@ const placeOrder = async (req,res) =>{
            res.json({success:false,message:"Not Paid"})
         }
      } catch (error) {
-        console.log(error);
+        
         res.json({success:false,message:"Error"})
      }
   }
@@ -78,7 +78,7 @@ const placeOrder = async (req,res) =>{
         const orders = await orderModel.find({userId:req.body.userId})
         res.json({success:true,data:orders})
      } catch (error) {
-        console.log(error);
+        
         res.json({success:false,message:"Error"})
      }
   }
@@ -89,7 +89,7 @@ const placeOrder = async (req,res) =>{
         const orders = await orderModel.find({});
         res.json({success:true,data:orders})
      } catch (error) {
-        console.log(error);
+        
         res.json({success:false,message:"Error"})
      }
   }
@@ -100,7 +100,7 @@ const placeOrder = async (req,res) =>{
         await orderModel.findByIdAndUpdate(req.body.orderId,{status:req.body.status});
         res.json({success:true,message:"Status Updated"})
      } catch (error) {
-        console.log(error);
+        
         res.json({success:false,message:"Error"})      
      }
   }

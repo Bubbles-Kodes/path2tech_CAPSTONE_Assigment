@@ -7,7 +7,7 @@ import fs from 'fs'
 const addFood = async (req,res) => {
 
     let image_filename = `${req.file.filename}`;
-    console.log (req)
+    
     const food = new foodModel({
         name:req.body.name,
         description:req.body.description,
@@ -15,12 +15,12 @@ const addFood = async (req,res) => {
         category:req.body.category,
         img:image_filename
     })
-    console.log (food)
+    
     try {
         await food.save();
         res.json({success:true,message:"Food Added"})
     } catch (error) {
-        console.log(error)
+        
         res.json({success:false,message:"Error"})
 
     }
@@ -33,7 +33,7 @@ const listFood = async (req,res) => {
         const foods = await foodModel.find({});
         res.json({success:true,data:foods})
     } catch (error) {
-        console.log(error);
+        
         res.json({success:false,message:"Error"})
     }
 
@@ -48,7 +48,7 @@ const removeFood = async (req,res) => {
         await foodModel.findByIdAndDelete(req.body.id);
         res.json({success:true,message:"Food Removed"})
     } catch (error) {
-        console.log(error);
+        
         res.json({success:false,message:"Error"})
         
     }

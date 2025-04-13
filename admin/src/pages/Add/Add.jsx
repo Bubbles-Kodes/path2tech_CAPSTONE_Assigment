@@ -33,7 +33,7 @@ const Add = ({url}) => {
 
        // Debugging: Log the FormData
        for (let pair of formData.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        
     }
 
     const response = await axios.post(`${url}/api/food/add`, formData, {

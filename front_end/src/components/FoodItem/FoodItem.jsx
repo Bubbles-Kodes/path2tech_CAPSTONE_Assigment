@@ -1,23 +1,31 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { StoreContext } from '../../context/StoreContext';
 import './FoodItem.css';
 
 const FoodItem = ({ name, description, img, price, _id }) => {
-  const { addToCart, url, removeFromCart } = useContext(StoreContext);
+  const { cartItems, addToCart, url, removeFromCart } = useContext(StoreContext);
   const [itemCount, setItemCount] = useState(0);
 
+  // Sync itemCount with cartItems from StoreContext
+  useEffect(() => {
+    
+    if (cartItems[_id]) {
+      setItemCount(cartItems[_id]); // Sync itemCount with cartItems
+    } else {
+      setItemCount(0); // Reset itemCount if the item is removed from cartItems
+    }
+  }, [cartItems, _id]);
+
   const handleAddToCart = () => {
-    setItemCount((prevCount) => prevCount + 1);
-    addToCart({ name, description, img, price, _id });
+    addToCart({ name, description, img, price, _id }); // Update global state
   };
 
   const handleRemoveFromCart = async () => {
     if (itemCount > 0) {
       try {
-        console.log("Removing item from cart:", { _id, name, description, img, price }); // Debugging
-        await removeFromCart({ _id, name, description, img, price }); // Await the backend call
-        setItemCount((prevCount) => prevCount - 1); // Update the local state
+        
+        await removeFromCart({ _id, name, description, img, price }); // Update global state
       } catch (error) {
         console.error("Error removing item from cart:", error);
       }
@@ -25,13 +33,12 @@ const FoodItem = ({ name, description, img, price, _id }) => {
   };
 
   const handleAddMore = () => {
-    setItemCount((prevCount) => prevCount + 1);
-    addToCart({ name, description, img, price, _id });
+    addToCart({ name, description, img, price, _id }); // Update global state
   };
 
   return (
     <div className='food-display-list-item'>
-      <img className='food-item-image' src={url+"/images/"+img} alt={name} />
+      <img className='food-item-image' src={url + "/images/" + img} alt={name} />
       <h3>{name}</h3>
       <p>{description}</p>
       <h4>${price.toFixed(2)}</h4>

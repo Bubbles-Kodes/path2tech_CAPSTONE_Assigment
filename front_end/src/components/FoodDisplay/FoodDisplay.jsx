@@ -3,25 +3,33 @@ import { StoreContext } from '../../context/StoreContext';
 import FoodItem from '../FoodItem/FoodItem';
 import './FoodDisplay.css';
 
-const FoodDisplay = () => {
+const FoodDisplay = ({category}) => {
   const { food_list } = useContext(StoreContext);
 
-  console.log("Food list being rendered:", food_list); // Debugging: Log the entire food list
+  
 
   return (
     <div className='food-display' id='food-display'>
       <h2>What You Cravin'?</h2>
     <div className="food-display-list">
-      {food_list.map((food) => {
-        console.log("Food item being passed to FoodItem:", food); // Debugging: Log each food item
+      {category==="All"? food_list.map(filterfood => 
+  <FoodItem
+    key={filterfood._id} // Ensure a unique key is used
+    _id={filterfood._id} // Pass _id to FoodItem
+    name={filterfood.name}
+    description={filterfood.description}
+    img={filterfood.img}
+    price={filterfood.price}
+  />) : food_list.filter(food => food.category===category).map (filterfood => {
+
         return (
           <FoodItem
-            key={food._id} // Ensure a unique key is used
-            _id={food._id} // Pass _id to FoodItem
-            name={food.name}
-            description={food.description}
-            img={food.img}
-            price={food.price}
+            key={filterfood._id} // Ensure a unique key is used
+            _id={filterfood._id} // Pass _id to FoodItem
+            name={filterfood.name}
+            description={filterfood.description}
+            img={filterfood.img}
+            price={filterfood.price}
           />
         );
       })}

@@ -23,7 +23,7 @@
     cursor: pointer;
 }
 .sidebar-option.active{
-    background-color: white;
+    background-color: #a7f4e8;
     border-color: aqua;
 }
 

@@ -28,37 +28,50 @@ const PlaceOrder = () => {
 
   const placeOrder = async (event) => {
     event.preventDefault();
+  
+    if (!token) {
+      alert("Please sign in to proceed to payment.");
+      return;
+    }
+  
     let orderItems = [];
     food_list.map((item) => {
-      if(cartItems[item._id]>0) {
+      if (cartItems[item._id] > 0) {
         let itemInfo = item;
         itemInfo["quantity"] = cartItems[item._id];
         orderItems.push(itemInfo);
       }
-    })
+    });
+  
     let orderData = {
-      address:data,
-      items:orderItems,
-      amount:getTotalCartAmount()+2,
+      address: data,
+      items: orderItems,
+      amount: parseFloat((getTotalCartAmount() + 10.50).toFixed(2)), // Include delivery fee
+    };
+  
+    try {
+      let response = await axios.post(url + "/api/order/place", orderData, { headers: { token } });
+      if (response.data.success) {
+        const { session_url } = response.data;
+        window.location.replace(session_url);
+      } else {
+        alert("Error: " + response.data.message);
+      }
+    } catch (error) {
+      console.error("Error placing order:", error.response?.data || error.message);
+      alert("An error occurred while placing the order. Please try again.");
     }
-    let response = await axios.post(url+"/api/order/place",orderData,{headers:{token}})
-    if(response.data.success) {
-      const {session_url} = response.data;
-      window.location.replace(session_url);
-    } else {
-      alert("Error");
-    }
-  }
+  };
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(!token) {
-      navigate("/cart")
-    } else if(getTotalCartAmount()===0) {
+    if(getTotalCartAmount()===0) {
       navigate("/cart")
     }
-  },[token])
+  },[])
+
+  
 
   return (
     <form onSubmit={placeOrder} className="place-order">
@@ -93,17 +106,17 @@ const PlaceOrder = () => {
           <div>
             <div className="cart-total-details">
               <p>Subtotal</p>
-              <p>${getTotalCartAmount()}</p>
+              ${getTotalCartAmount().toFixed(2)}
             </div>
             <hr />
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>${getTotalCartAmount()===0?0:2}</p>
+              <p>${getTotalCartAmount() === 0 ? "0.00" : (10.50).toFixed(2)}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <b>Total</b>
-              <b>${getTotalCartAmount()===0?0:getTotalCartAmount()+2}</b>
+              <b>${getTotalCartAmount() === 0 ? "0.00" : (getTotalCartAmount() + 10.50).toFixed(2)}</b>
             </div>
           </div>
           <button type="submit">Proceed to Payment</button>

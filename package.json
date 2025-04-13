@@ -1,0 +1,16 @@
+{
+  "name": "path2tech_capstone_assigment",
+  "version": "1.0.0",
+  "description": "food application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "food",
+    "app",
+    "dessert"
+  ],
+  "author": "Bubbles Kodes",
+  "license": "ISC"
+}

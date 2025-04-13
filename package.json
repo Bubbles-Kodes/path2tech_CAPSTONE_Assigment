@@ -2,7 +2,7 @@
   "name": "path2tech_capstone_assigment",
   "version": "1.0.0",
   "description": "food application",
-  "main": "index.js",
+  "main": "main.jsx",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
